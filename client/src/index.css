@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+
+* html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+
+}
+
+*::-webkit-scrollbar {
+  margin:0;
+  padding:0;
+  width: 5px;
+  height: 10px;
+  display: none;
+}
+
+.react-calendar{
+  width: 100%;
+  border: 0;
+ }
+
+.swiper-pagination-bullet-active {
+  background-color: rgb(19 78 74) !important;
+  transform: scale(1.5) !important;
+}
+.swiper-button-next { 
+  color: rgb(19 78 74) !important; 
+  transform: scale(1.5) !important;
+}
+.swiper-button-prev { 
+  color: rgb(19 78 74) !important;
+  transform: scale(1.5) !important;
+}
+
+.color1{
+  animation-name: changecolor;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes changecolor {
+  0% {
+    color: white;
+}
+
+50% {
+  color: #134e4a;
+}
+
+100% {
+  color: white;
+}
+}
+.color2{
+  animation-name: change;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes change {
+  0% {
+    color: #134e4a;
+}
+
+50% {
+  color: white;
+}
+
+100% {
+  color: #134e4a;
+}
+}
+.statistic{
+  animation-name: changestatistic;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes changestatistic {
+  0% {
+    color: #134e4a;
+}
+
+50% {
+  color: #269c94;
+}
+
+100% {
+  color: #134e4a;
+}
+}
+
+
+/* .blinking{
+  animation: animate 5s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+      opacity: 0;
+  }
+
+  50% {
+      opacity: 1;
+  }
+
+  100% {
+      opacity: 0;
+  }
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
