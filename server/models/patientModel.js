@@ -53,6 +53,10 @@ const patientSchema = mongoose.Schema({
         type : String,
         // required : [true,'MetaPrivateKey Is Required']
     },
+    Signature: {
+        type : String,
+        // required : [true,'MetaPrivateKey Is Required']
+    },
     isGrant : []
 },{timeStamps : true})
 

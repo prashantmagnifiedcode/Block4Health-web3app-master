@@ -7,21 +7,13 @@ export const registerPatient = (patient) => async dispatch => {
     console.log("val")
 
     try {
-        const{MetaPrivateKey}=patient
-        const val=await RegisterPatient(MetaPrivateKey)
-        console.log("val",val)
-        if(val){
-            
             const res = await axios.post('/api/patients/register',patient);
             console.log("diap val",val,res.status)
-            if( res.status){
+            if( res.status==200){
     
                 dispatch({type : 'PATIENT_REGISTER_SUCCESS'})
             }
-        }else{
-    dispatch({type : 'META_NOT_REGISTER'})
-            
-        }
+   
        
     } catch (error) {
         dispatch({type : 'PATIENT_REGISTER_FAIL',payload : error})

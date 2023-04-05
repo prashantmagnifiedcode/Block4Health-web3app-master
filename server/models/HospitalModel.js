@@ -6,11 +6,15 @@ const doctorSchema = mongoose.Schema({
         type : String,
         // required : [true,'HospitalName Is Required']
     },
+    HospitalId : {
+        type : String,
+        // required : [true,'HospitalName Is Required']
+    },
     MetaAccount : {
         type : String,
         // required : [true,'MetaAccount Is Required']
     },
-    MetaPrivateKey : {
+    Signature : {
         type : String,
         // required : [true,'MetaPrivateKey Is Required']
     },

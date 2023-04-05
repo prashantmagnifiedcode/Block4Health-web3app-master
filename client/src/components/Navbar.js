@@ -124,7 +124,7 @@ const Navbar = () => {
                         <NavLink to='/register/registerdoctor'
                               // className={({ isActive }) => isActive ? 'text-light1 font-bold' : null }
                         >
-                          <li className='cursor-pointer text-xl mt-1 font-black hover:text-light2' onClick={controlClickRegister}>Doctor</li>
+                          <li className='cursor-pointer text-xl mt-1 font-black hover:text-light2' onClick={controlClickRegister}>Hospital</li>
                         </NavLink>
                       </ul>
                   </div>
@@ -146,7 +146,7 @@ const Navbar = () => {
                         <NavLink to='/login/logindoctor'
                               // className={({ isActive }) => isActive ? 'text-light1 font-bold' : null }
                         >
-                          <li className='cursor-pointer text-xl mt-1 font-black hover:text-light2' onClick={controlClickLogin}>Doctor</li>
+                          <li className='cursor-pointer text-xl mt-1 font-black hover:text-light2' onClick={controlClickLogin}>Hospital</li>
                         </NavLink>
                         <NavLink to='/login/loginadmin'
                               // className={({ isActive }) => isActive ? 'text-light1 font-bold' : null }

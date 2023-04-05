@@ -1,26 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const Doctor = require("../models/doctorModel");
+const Doctor = require("../models/HospitalModel");
 const Patient = require("../models/patientModel");
+const {v4 : uuidv4} = require('uuid')
 
 //hospital registeration
 router.post("/register", async (req, res) => {
-  const { HospitalName, MetaAccount, MetaPrivateKey } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashedMetaPrivateKey = await bcrypt.hash(MetaPrivateKey, salt);
-  console.log(hashedMetaPrivateKey);
-  const newDoctor = new Doctor({
-    HospitalName,
-    MetaAccount,
-    MetaPrivateKey: hashedMetaPrivateKey,
-  });
+  const { HospitalName, MetaAccount, Signature } = req.body;
   try {
-    newDoctor.save();
-    res.status(200).json({
-      success: true,
-      message: "Register Success",
-    });
+    const AlreadyRegister = await Doctor.find({ MetaAccount });
+    console.log(AlreadyRegister)
+    if (AlreadyRegister.length) {
+      res.status(400).json({
+        success: true,
+        message: "Already Register",
+      });
+    }else{
+      const HospitalId = uuidv4()  
+      const salt = await bcrypt.genSalt(10);
+      const hashedMetaPrivateKey = await bcrypt.hash(Signature, salt);
+      console.log(hashedMetaPrivateKey);
+
+      const newDoctor = new Doctor({
+        HospitalName,
+        HospitalId,
+        MetaAccount,
+        Signature: hashedMetaPrivateKey,
+      });
+      newDoctor.save();
+      res.status(200).json({
+        success: true,
+        message: {HospitalId,msg:"successfully"},
+      });
+    }
   } catch (error) {
     res.status(400).json({
       message: error,
@@ -45,17 +58,14 @@ router.post("/register", async (req, res) => {
 // });
 //for hospital
 router.post("/login", async (req, res) => {
-  const { MetaAccount, MetaPrivateKey } = req.body;
+  const { MetaAccount, Signature } = req.body;
   // console.log("hu",MetaPrivateKey)
 
   try {
     const doctor = await Doctor.find({ MetaAccount });
     console.log(doctor);
 
-    const verifyPassword = await bcrypt.compare(
-      MetaPrivateKey,
-      doctor[0].MetaPrivateKey
-    );
+    const verifyPassword = await bcrypt.compare(Signature, doctor[0].Signature);
     console.log(doctor, verifyPassword);
     if (!verifyPassword) {
       res.status(400).json({

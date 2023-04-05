@@ -4,11 +4,21 @@ const bcrypt=require("bcrypt")
 const Patient = require('../models/patientModel');
 
 router.post('/register',async(req,res) => {
-     const {fname,email,phonenumber,age,bloodgroup,dob,address,country,state,city,aadhaar,MetaAccount,MetaPrivateKey} = req.body;
+   
+     const {fname,email,phonenumber,age,bloodgroup,dob,address,country,state,city,aadhaar,MetaAccount,Signature} = req.body;
      const salt = await bcrypt.genSalt(10);
-     const hashedMetaPrivateKey = await bcrypt.hash(MetaPrivateKey, salt);
+     const hashedMetaPrivateKey = await bcrypt.hash(Signature, salt);
      console.log(hashedMetaPrivateKey)
-     const newPatient = new Patient({fname,email,phonenumber,age,bloodgroup,dob,address,country,state,city,aadhaar,MetaPrivateKey:hashedMetaPrivateKey,MetaAccount});
+
+     const patient1 = await Patient.find({MetaAccount});
+     if(patient1.length){
+      res.status(400).json({
+         success : true,
+         message : "Already Register"
+    });
+     }
+
+     const newPatient = new Patient({fname,email,phonenumber,age,bloodgroup,dob,address,country,state,city,aadhaar,Signature:hashedMetaPrivateKey,MetaAccount});
    console.log(newPatient)
       try {
         newPatient.save();
@@ -24,14 +34,14 @@ router.post('/register',async(req,res) => {
 });
 
 router.post('/login', async (req,res) => {
-   const {MetaAccount,MetaPrivateKey} = req.body;
+   const {MetaAccount,Signature} = req.body;
    console.log(req.body)
    // const result = await Patient.validateAsync(req.body);/
 
    try {
        const patient1 = await Patient.find({MetaAccount});
        console.log(patient1)
-       const verifyPassword = await bcrypt.compare(MetaPrivateKey,patient1[0].MetaPrivateKey);
+       const verifyPassword = await bcrypt.compare(Signature,patient1[0].Signature);
        if(!verifyPassword){
          res.status(400).json({
             message : 'Login Auth Failed'

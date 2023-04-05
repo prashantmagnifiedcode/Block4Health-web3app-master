@@ -1,4 +1,4 @@
-const {openwallet}=require("./metafunction")
+const {openwallet,Initopenwallet}=require("./metafunction")
 const RegisterPatient=async(hashrecord)=>{
    console.log(hashrecord)
     

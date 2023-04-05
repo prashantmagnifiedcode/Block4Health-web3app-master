@@ -7,14 +7,15 @@ import {registerPatient} from '../actions/patientAction';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import Success from '../components/Success';
-import {openwallet} from '../utils/metafunction'
+import {Initopenwallet} from '../utils/metafunction'
 import MetaButton from './metaloginbutton'
 
 const RegisterPatientScreen = () => {
        
        const [Meta,setMeta] = useState(false);
        const [MetaAccount,setMetaAccount] = useState("");
-       console.log(MetaAccount)
+       const [Signature,setSignature] = useState("");
+       console.log(MetaAccount,Signature)
        const [fname,setFname] = useState('');
        const [lname,setLname] = useState('');
        const [email,setEmail] = useState('');
@@ -44,12 +45,12 @@ const RegisterPatientScreen = () => {
               e.preventDefault();
               if(!MetaAccount){
                      alert('Connect Metamask wallet Intially');
-              }else if(!MetaPrivateKey){
+              }else if(!Signature){
                      alert('pls fill correct credentials');
               }
               else{
                      const patient = {fname,lname,email,phonenumber
-                            ,age,bloodgroup,dob,address,country,state,city,aadhaar,MetaAccount,MetaPrivateKey};
+                            ,age,bloodgroup,dob,address,country,state,city,aadhaar,MetaAccount,MetaPrivateKey,Signature};
                      dispatch(registerPatient(patient));
 
                      setFname('');
@@ -109,17 +110,27 @@ const RegisterPatientScreen = () => {
                      />
                    
                          <div className=' flex justify-center items-center'>
-               <MetaButton onPress={openwallet} setMetaAccount={setMetaAccount} setMeta={setMeta}/>
+               <MetaButton onPress={Initopenwallet} setMetaAccount={setMetaAccount} setMeta={setMeta} setSignature={setSignature}/>
                  </div>
                  </div>
                  {
                      Meta?
+                     <>
                  <div className='mt-5'>
                  <input type='text' placeholder='MetaAccount' value={MetaAccount} readOnly
                         className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
                     
                   />
-                 </div>:null
+                 </div>
+                 <div className='mt-5'>
+                 <input type='text' placeholder='Signature' value={Signature} readOnly
+                        className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
+                    
+                  />
+                 </div>
+                     </>
+                 
+                 :null
                  }
                  <div className='mt-5'>
                  <input type='email' placeholder='Email' 

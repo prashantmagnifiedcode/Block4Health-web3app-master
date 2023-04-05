@@ -7,14 +7,16 @@ import {registerDoctor} from '../actions/doctorAction';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import Success from '../components/Success';
-import {openwallet} from '../utils/metafunction'
 import MetaButton from './metaloginbutton'
+import {Initopenwallet} from '../utils/metafunction'
+
 const RegisterDoctorScreen = () => {
        const [HospitalName,setHospitalName] = useState('');
        const [Meta,setMeta] = useState(false);
        const [MetaAccount,setMetaAccount] = useState("");
        console.log(MetaAccount)
        const [MetaPrivateKey,setMetaPrivateKey] = useState('');
+       const [Signature,setSignature] = useState('');
      
        const [checkbox,setCheckbox] = useState(false);
        
@@ -28,10 +30,10 @@ const RegisterDoctorScreen = () => {
               e.preventDefault();
               if(!MetaAccount){
                      alert('Connect Metamask wallet Intially');
-              }else if(!MetaPrivateKey){
+              }else if(!Signature){
                      alert('pls fill correct credentials');
               }else{
-                     const doctor = {HospitalName,MetaAccount,MetaPrivateKey};
+                     const doctor = {HospitalName,MetaAccount,Signature};
                      console.log(doctor)
                      dispatch(registerDoctor(doctor));
 
@@ -79,27 +81,37 @@ const RegisterDoctorScreen = () => {
                      />
                    
                          <div className=' flex justify-center items-center'>
-               <MetaButton onPress={openwallet} setMetaAccount={setMetaAccount} setMeta={setMeta}/>
+               <MetaButton onPress={Initopenwallet} setMetaAccount={setMetaAccount} setMeta={setMeta} setSignature={setSignature}/>
                  </div>
                  </div>
                  {
                      Meta?
-                 <div className='mt-5'>
-                 <input type='text' placeholder='MetaAccount' value={MetaAccount} readOnly
-                        className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
-                    
-                  />
-                 </div>:null
+                     <>
+                     <div className='mt-5'>
+                     <input type='text' placeholder='MetaAccount' value={MetaAccount} readOnly
+                            className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
+                        
+                      />
+                     </div>
+                     <div className='mt-5'>
+                     <input type='text' placeholder='Signature' value={Signature} readOnly
+                            className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
+                        
+                      />
+                      </div>
+                 </>
+                 
+                 :null
                  }
                
-                
+{/*                 
                  <div className='mt-5'>
                  <input type='password' placeholder='MetaPrivateKey' 
                         className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
                         value={MetaPrivateKey}
                         onChange={e => setMetaPrivateKey(e.target.value)}
                   />
-                 </div>
+                 </div> */}
                  <div className='mt-5 flex justify-start items-center w-full'>
                  <input type='checkbox' checked={checkbox}
                         className='border-solid border-x-2 rounded-3xl border-y-2 border-teal-900'

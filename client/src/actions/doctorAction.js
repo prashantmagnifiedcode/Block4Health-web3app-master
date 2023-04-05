@@ -5,18 +5,15 @@ import {registerHospital} from '../utils/RegisterHospital'
 export const registerDoctor = (doctor) => async dispatch => {
     dispatch({type : 'DOCTOR_REGISTER_REQUEST'})
     try {
-        const {MetaPrivateKey}=doctor
-        const val=await registerHospital(MetaPrivateKey)
-        if(val){
+        // const {MetaPrivateKey}=doctor
+        // const val=await registerHospital(MetaPrivateKey)
+        // if(val){
 
             const res = await axios.post('/api/doctors/register',doctor);
-            if( res.status){
+            if( res.status==200){
                 dispatch({type : 'DOCTOR_REGISTER_SUCCESS'});
             }
-        }else{
-                dispatch({type : 'META_NOT_REGISTER'})
-            
-        }
+        
     } catch (error) {
         dispatch({type : 'DOCTOR_REGISTER_FAIL',payload : error})
     }
