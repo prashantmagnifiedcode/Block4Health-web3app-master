@@ -13,6 +13,7 @@ import PatientNavbar from './components/PatientNavbar'
 import PatientDashboardScreen from './screens/PatientDashboardScreen'
 import DoctorNavbar from './components/DoctorNavbar'
 import DoctorDashboardScreen from './screens/DoctorDashboardScreen'
+import HospitalDashboardScreen from './screens/HospitalDashboard'
 import AdminNavbar from './components/AdminNavbar'
 import AdminDashboardScreen from './screens/AdminDashboardScreen'
 import PatientsList from './screens/PatientsList'
@@ -47,7 +48,7 @@ const App = () => {
        </>) : (currentDoctor ? (<>
          <DoctorNavbar />
          <Routes>
-          <Route exact path="/" element={<DoctorDashboardScreen/>}/>
+          <Route exact path="/" element={<HospitalDashboardScreen/>}/>
           <Route exact path="/getdocument" element={<PatientDocumentScreen/>}/>
           <Route exact path="/getpatientfullprofile" element={<PatientFullProfile/>}/>
           <Route exact path="/addviewehr" element={<PatientsAddViewEhr/>}/>

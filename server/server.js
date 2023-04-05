@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(morgan('dev'));
  
 app.use('/api/patients', require('./routes/patientRoutes'));
-app.use('/api/doctors', require('./routes/doctorRoutes'));
-app.use('/api/Doctors', require('./routes/DoctorRouter'));
+app.use('/api/doctors', require('./routes/HospitalsRoutes'));
+app.use('/api/Doctors', require('./routes/HospitalDoctorRouter'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
 

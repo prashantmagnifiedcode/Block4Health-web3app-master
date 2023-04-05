@@ -1,10 +1,12 @@
 import React from 'react'
-const MetaButton=({onPress,setMeta,setMetaAccount})=>{
+const MetaButton=({onPress,setMeta,setMetaAccount,setSignature})=>{
  const handle=async()=>{
     const val=await onPress()
+    console.log("met",val)
     if(val){
         setMetaAccount(val.accounts[0]);
         setMeta(true)
+        setSignature(val.signature)
 
     }
     

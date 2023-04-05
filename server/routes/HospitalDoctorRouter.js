@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const {v4 : uuidv4} = require('uuid')
-const HospitalDoctor = require("../models/DoctorModal");
+const HospitalDoctor = require("../models/HospitalDoctorModal");
 
 //doctor registeration
 router.post("/RegisterDoctor", async (req, res) => {

@@ -7,7 +7,7 @@ import {loginPatient} from '../actions/patientAction';
 import Loader from '../components/Loader';
 import Success from '../components/Success';
 import Error from '../components/Error';
-import {openwallet} from '../utils/metafunction'
+import {LoginMeta} from '../utils/login'
 // import {registerpatient} from '../utils/Register'
 import MetaButton from './metaloginbutton'
 const LoginPatientScreen = () => {
@@ -15,6 +15,7 @@ const LoginPatientScreen = () => {
   const [password,setPassword] = useState('');
   const [Meta,setMeta] = useState(false);
   const [MetaAccount,setMetaAccount] = useState('');
+  // const [Signature,setSignature] = useState("");
   const [MetaPrivateKey,setMetaPrivateKey] = useState('');
   const dispatch = useDispatch();
 
@@ -27,17 +28,26 @@ const LoginPatientScreen = () => {
     }
   },[])
 
-  const loginPatientHandler = (event) => {
-    window.scrollTo({top:0,behavior:"smooth"});
+  const loginPatientHandler = async(event) => {
     event.preventDefault();
-    const patient = {MetaAccount,MetaPrivateKey};
-    dispatch(loginPatient(patient));
+   const {Signature,MetaAccount}= await LoginMeta()
+   console.log(MetaAccount,Signature)
+  //  if(Signature){
+
+     window.scrollTo({top:0,behavior:"smooth"});
+     const patient = {MetaAccount,MetaPrivateKey,Signature};
+     dispatch(loginPatient(patient));
+  //  }
   }
+  // if(Signature){
+  //   const patient = {MetaAccount,MetaPrivateKey,Signature};
+  //   dispatch(loginPatient(patient));
+  // }
 
 
   ///blockchain part
   
-//   const openwallet=()=> {
+//   const Initopenwallet=()=> {
 //     load()
 //     loadblockchain()
 //   }
@@ -102,34 +112,13 @@ const LoginPatientScreen = () => {
                    
                    <form>
               
-                   <div className='md:mt-14 mt-10'>
-                   <input type='text' placeholder='Private Key' 
-                          className='border-solid border-2 shadow-sm shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
-                          value={MetaPrivateKey}
-                          onChange={(e) => setMetaPrivateKey(e.target.value)}
-                    />
-                   </div>
                      
-                   <div className='mt-5 flex justify-between items-center'>
-                    <div className='w-1/2'>
-
-                   <input type='text' placeholder='Account Number' 
-                          className='border-solid border-2 shadow-sm text-xs shadow-gray-400 border-white/10 bg-white/5 font-black outline-none text-white rounded-3xl focus:border-white/50 py-1 px-4 w-full'
-                          value={MetaAccount}
-                          readOnly
-                          
-                    />
-                    
-                    </div>
-                   <MetaButton onPress={openwallet} setMeta={setMeta} setMetaAccount={setMetaAccount} />
-                   
-                   </div>
                 
                    <div className='md:mt-14 mt-8'>
                    <div className='mt-5 flex justify-center'>
                    <button type="submit"
                    onClick={(e)=>loginPatientHandler(e)}
-                   class="text-gray-900 bg-gradient-to-r from-red-200 via-blue-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-green-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Login</button>
+                   class="text-gray-900 bg-gradient-to-r from-red-200 via-blue-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-green-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Login with MetaMask</button>
                    </div>
                    </div>
                  </form>

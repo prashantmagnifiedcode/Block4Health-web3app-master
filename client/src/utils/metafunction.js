@@ -1,8 +1,12 @@
 const Web3 =require("web3");
 const Block4Health= require('../contructs/Block4Health.json')
-  const openwallet=()=> {
+  const Initopenwallet=()=> {
     load()
     return loadblockchain()
+  }
+  const openwallet=()=> {
+    load()
+    return loadblockchain1()
   }
   const load=async()=>{
         
@@ -20,13 +24,9 @@ else {
 }
 
 }
-const loadblockchain=async()=>{
+const loadblockchain1=async()=>{
   const web3 = window.web3
   const accounts = await web3.eth.getAccounts()
-  
- const val=  await web3.eth.personal.sign("Block4Health", accounts[0])
-  console.log(val)
-
   const networkId = await web3.eth.net.getId()
   const networkData = Block4Health.networks[networkId]
   
@@ -40,6 +40,26 @@ const loadblockchain=async()=>{
      } 
 
 }
+const loadblockchain=async()=>{
+  const web3 = window.web3
+  const accounts = await web3.eth.getAccounts()
+  
+ const signature=  await web3.eth.personal.sign("Block4Health", accounts[0])
+  console.log(signature)
+
+  const networkId = await web3.eth.net.getId()
+  const networkData = Block4Health.networks[networkId]
+  
+  // console.log(networkData)
+ 
+    if(networkData){
+           let  instance= new web3.eth.Contract(Block4Health.abi,networkData.address);
+           
+             console.log(instance.methods)
+             return {instance,accounts,signature};
+     } 
+
+}
 
 
-module.exports={openwallet}
+module.exports={openwallet,Initopenwallet}
